@@ -17,6 +17,7 @@ const App = () => {
     if (e.keyCode === 13) {
       setIsLoading(true);
       const obj = await fetchWeather(city);
+      console.log(obj);
       setIsLoading(false);
       if (obj.cod === "200") {
         setWeather(obj);
@@ -69,7 +70,7 @@ const App = () => {
             <div className="weather">
               <div className="today">
                 <div className="pic">
-                  <img src={parseCode(weather.list[0].weather[0].id)} />
+                  <img src={parseCode(weather.list[0].weather[0].id, weather.list[0].dt_txt)} />
                 </div>
                 <div className="descr">
                   <h2>Now</h2>
@@ -91,7 +92,7 @@ const App = () => {
                         key={index}
                         day={parseDay(item.dt_txt)}
                         temp={`${Math.round(item.main.temp)}°C`}
-                        image={parseCode(item.weather[0].id)}
+                        image={parseCode(item.weather[0].id, item.dt_txt)}
                       />
                     );
                   }
