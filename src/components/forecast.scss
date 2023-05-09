@@ -1,0 +1,16 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 180px;
+  height: 180px;
+  border-radius: 30%;
+  background-color: hsla(0, 0%, 100%, 0.3);
+  box-shadow: 3px 0 8px silver;
+  padding-bottom: 10px;
+}
+
+.img {
+  width: 100px;
+}
