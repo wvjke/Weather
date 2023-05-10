@@ -33,7 +33,6 @@ const App = () => {
     if (e.keyCode === 13) {
       setIsLoading(true);
       const obj = await fetchWeather(city);
-      console.log(obj);
       setIsLoading(false);
       if (obj.cod === "200") {
         setWeather(obj);
@@ -45,8 +44,7 @@ const App = () => {
   };
 
   const handleChange = (e) => {
-    const str = e.replace(/[^a-z -.]/i, "");
-    setCity(str);
+    setCity(e);
   };
 
   return (
@@ -62,6 +60,7 @@ const App = () => {
               {isLoading ? <i className="pi pi-spin pi-spinner" /> : null}
               <InputText
                 value={city}
+                maxLength={20}
                 placeholder={placeholder}
                 onKeyDown={(e) => onSubmit(e)}
                 onChange={(e) => handleChange(e.target.value)}
@@ -77,6 +76,7 @@ const App = () => {
               <InputText
                 placeholder={placeholder}
                 value={city}
+                maxLength={20}
                 onKeyDown={(e) => onSubmit(e)}
                 onChange={(e) => handleChange(e.target.value)}
               />
