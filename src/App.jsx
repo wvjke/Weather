@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.scss";
 import { fetchWeather } from "./services/api";
 import { InputText } from "primereact/inputtext";
@@ -10,8 +10,24 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [placeholder, setPlaceholder] = useState("Enter a city...");
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(getLocation, () => {});
+  }, []);
+
+  const getLocation = async ({ coords }) => {
+    const { latitude, longitude } = coords;
+    const res = await fetch(
+      `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`
+    );
+    const { address } = await res.json();
+    setCity(address.city);
+  };
+
   const onSubmit = async (e) => {
-    if (weather.city && weather.city.name.toLowerCase() === city.toLowerCase()) {
+    if (
+      weather.city &&
+      weather.city.name.toLowerCase() === city.toLowerCase()
+    ) {
       return;
     }
     if (e.keyCode === 13) {
@@ -70,7 +86,12 @@ const App = () => {
             <div className="weather">
               <div className="today">
                 <div className="pic">
-                  <img src={parseCode(weather.list[0].weather[0].id, weather.list[0].dt_txt)} />
+                  <img
+                    src={parseCode(
+                      weather.list[0].weather[0].id,
+                      weather.list[0].dt_txt
+                    )}
+                  />
                 </div>
                 <div className="descr">
                   <h2>Now</h2>
